@@ -7,7 +7,7 @@ public class  ContactRepositoryTest extends MiniatureSpiceTestCase {
     ContactRepository contactRepository = new ContactRepository(db); 
     public void test_删除指定ID的Contact() {
         contactRepository.deleteById(1L);       
-        assertEquals("DELETE FROM contact WHERE id=1", db.executeUpdateParam);
+        assertEqualsIgnoreCase("delete FROM contact WHERE id=1", db.executeUpdateParam);
     }
 } 
 

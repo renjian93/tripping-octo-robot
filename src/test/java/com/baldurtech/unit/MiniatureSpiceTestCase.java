@@ -78,6 +78,10 @@ public class MiniatureSpiceTestCase {
     public static void assertFalse(Boolean actualResult) {
         assertEquals(false, actualResult, actualResult == false);
     }
+    
+    public static void assertEqualsIgnoreCase(String expectedResult, String actualResult) {
+        assertEquals(expectedResult, actualResult, expectedResult.equalsIgnoreCase(actualResult));
+    }
 
     public static void assertEquals(Object expectedResult, Object actualResult) {
         Boolean testResult = false;
