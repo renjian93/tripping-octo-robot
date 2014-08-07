@@ -2,23 +2,11 @@
 
 echo "Run test"
 
-CLASSPATH=target/classes:target/test-classes
+CLASSPATH_TEST="lib-test/reflections-0.9.9-RC2.jar;target/test-classes;target/classes"
+CLASSPATH_TEST="$CLASSPATH_TEST;lib-test/guava-15.0.jar"
+CLASSPATH_TEST="$CLASSPATH_TEST;lib-test/javassist-3.18.2-GA.jar"
 
-for JARFILE in lib/*.jar; do
-    CLASSPATH=$CLASSPATH:$JARFILE
-done
-
-CLASSPATH_RUNTIME=$CLASSPATH
-[[ -d lib-runtime ]] && for JARFILE in lib-runtime/*.jar; do
-    CLASSPATH_RUNTIME=$CLASSPATH_RUNTIME:$JARFILE
-done
-
-CLASSPATH_TEST=$CLASSPATH_RUNTIME
-[[ -d lib-test ]] && for JARFILE in lib-test/*.jar; do
-    CLASSPATH_TEST=$CLASSPATH_TEST:$JARFILE
-done
-
-java -classpath $CLASSPATH_TEST com.baldurtech.unit.MiniatureSpiceTestCase "$@"
+java -classpath "$CLASSPATH_TEST" com.baldurtech.unit.MiniatureSpiceTestCase "com.baldurtech"
 RETVAL=$?
 
 echo "Test done."

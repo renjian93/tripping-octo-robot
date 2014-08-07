@@ -1,28 +1,15 @@
 #!/bin/sh
-set -e
 
 echo "Compile"
 
 mkdir -p target/classes target/test-classes
 
-CLASSPATH=target/classes:target/test-classes
+javac -d target/classes -classpath "lib/servlet-api.jar;target/classes" src/main/java/com/baldurtech/*.java
 
-for JARFILE in lib/*.jar; do
-    CLASSPATH=$CLASSPATH:$JARFILE
-done
+javac -d target/test-classes -classpath "lib-test/reflections-0.9.9-RC2.jar;target/classes;target/test-classes" src/test/java/com/baldurtech/unit/*.java
 
-CLASSPATH_RUNTIME=$CLASSPATH
-[[ -d lib-runtime ]] && for JARFILE in lib-runtime/*.jar; do
-    CLASSPATH_RUNTIME=$CLASSPATH_RUNTIME:$JARFILE
-done
+javac -encoding "UTF-8" -d target/test-classes -classpath "lib-test/reflections-0.9.9-RC2.jar;target/classes;target/test-classes" src/test/java/com/baldurtech/*.java
 
-CLASSPATH_TEST=$CLASSPATH_RUNTIME
-[[ -d lib-test ]] && for JARFILE in lib-test/*.jar; do
-    CLASSPATH_TEST=$CLASSPATH_TEST:$JARFILE
-done
-
-find src/main/java -type f -name \*.java | xargs javac -d target/classes -classpath $CLASSPATH
-
-find src/test/java -type f -name \*.java | xargs javac -d target/test-classes -classpath $CLASSPATH_TEST
+CLASSPATH="target/classes;target/test-classes"
 
 echo "Compile done"
