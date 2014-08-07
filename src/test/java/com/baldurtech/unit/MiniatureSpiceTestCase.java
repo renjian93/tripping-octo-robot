@@ -66,7 +66,7 @@ public class MiniatureSpiceTestCase {
     public static void assertEquals(int expectedResult, int actualResult) {
         assertEquals(expectedResult, actualResult, expectedResult == actualResult);
     }
-
+    
     public static void assertNull(Object actualResult) {
         assertEquals(null, actualResult, actualResult == null);
     }
@@ -84,15 +84,40 @@ public class MiniatureSpiceTestCase {
     }
 
     public static void assertEquals(Object expectedResult, Object actualResult) {
+        Boolean testResult = equals(expectedResult, actualResult);
+        assertEquals(expectedResult, actualResult, testResult);
+    }
+    
+    public static Boolean equals(Object expectedResult, Object actualResult) {
         Boolean testResult = false;
+        
         if(expectedResult == null && actualResult == null) {
             testResult = true;
         } else if(expectedResult != null){
             testResult = expectedResult.equals(actualResult);
         }
-        assertEquals(expectedResult, actualResult, testResult);
+        return testResult;
     }
 
+     public static void assertArrayEquals(Object[] expectedResult, Object[] actualResult) {
+        Boolean testResult = false;
+        testResult = actualResult != null;
+        testResult = testResult && expectedResult.length == actualResult.length;
+        
+        if(testResult) {
+            for(int index=0; index<expectedResult.length; index++) {
+                testResult = equals(expectedResult[index], actualResult[index]);
+                if(!testResult) {
+                    System.out.println("Array[" + index + "] expected '" + (expectedResult[index] == null?"NULL":expectedResult[index]) + "',but '" + (actualResult[index] == null?"NULL":actualResult[index]) + "'" );
+                    break;
+                }
+            }
+        } else {
+            System.out.println(" The length of both arrays not equals.");
+        }
+        assertEquals(expectedResult, actualResult, testResult);
+    }
+    
     private static void assertEquals(Object expectedResult, Object actualResult, Boolean testSuccess) {
         if(! testSuccess) {
             testResult = false;
