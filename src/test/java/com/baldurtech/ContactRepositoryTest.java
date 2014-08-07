@@ -18,7 +18,9 @@ public class  ContactRepositoryTest extends MiniatureSpiceTestCase {
         contact.setName("xiaobai");
         contact.setMobile("18234567890");
         contactRepository.update(contact);
-        assertEqualsIgnoreCase("UPDATE contact SET email='xiaobai@gmail.com',home_address=NULL,job=NULL,job_level=NULL,memo=NULL,mobile='18234567890',name='xiaobai',office_address=NULL,vpmn=NULL,WHERE id=1", db.executeUpdateParam);
+        assertEqualsIgnoreCase("UPDATE contact SET email=?,home_address=?,job=?,job_level=?,memo=?,mobile=?,name=?,office_address=?,vpmn=?,WHERE id=?", db.executeUpdateParam);
+        assertArrayEquals(new Object[]{"xiaobai@gmail.com",null,null,null,null,"18234567890","xiaobai",null,null,1L},db.executeUpdateParam2);
     }
+   
 } 
 
